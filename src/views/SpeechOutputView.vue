@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import OutputItem from '@/components/OutputItem.vue';
+import OutputCard from '@/components/OutputCard.vue';
 import { useRecordingState } from '@/constants/store';
 import { useMockData } from '@/services/AudioService';
-import type { OutputItemProps } from '@/types/props/OutputItemProps';
+import type { OutputCardProps } from '@/types/props/OutputCardProps';
 import type { AudioData } from '@/types/view-models/AudioData';
 import { ref, watch, type Ref } from 'vue';
 
 const isRecording: Ref<boolean> = useRecordingState();
-const childProps: Ref<OutputItemProps[]> = ref([]);
+const childProps: Ref<OutputCardProps[]> = ref([]);
 const mockData: Ref<AudioData> = useMockData();
 
 watch(
@@ -31,7 +31,7 @@ watch(
   () => mockData.value,
   (mockData) => {
     console.log(mockData.word);
-    const activeCard: OutputItemProps | undefined = getActiveOutputItem();
+    const activeCard: OutputCardProps | undefined = getActiveOutputCard();
 
     if (activeCard && mockData.index > 0) {
       activeCard.text += ' ' + mockData.word;
@@ -39,14 +39,14 @@ watch(
   }
 );
 
-function getActiveOutputItem(): OutputItemProps | undefined {
+function getActiveOutputCard(): OutputCardProps | undefined {
   return childProps.value.find((props) => props.isActive);
 }
 </script>
 
 <template>
   <main class="flex justify-start flex-col flex-nowrap">
-    <OutputItem v-for="props in childProps" v-bind="props" :key="props.index" />
+    <OutputCard v-for="props in childProps" v-bind="props" :key="props.index" />
   </main>
 </template>
 

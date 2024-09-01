@@ -1,4 +1,4 @@
-export interface OutputItemProps {
+export interface OutputCardProps {
   isActive: boolean;
   index: number;
   text: string;
