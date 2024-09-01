@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { OutputItemProps } from '@/types/props/OutputItemProps'
+import type { OutputItemProps } from '@/types/props/OutputItemProps';
 
-const props = defineProps<OutputItemProps>()
+const props = defineProps<OutputItemProps>();
 </script>
 
 <template>

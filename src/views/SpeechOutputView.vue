@@ -1,46 +1,46 @@
 <script setup lang="ts">
-import OutputItem from '@/components/OutputItem.vue'
-import { useRecordingState } from '@/constants/store'
-import { useMockData } from '@/services/AudioService'
-import type { OutputItemProps } from '@/types/props/OutputItemProps'
-import type { AudioData } from '@/types/view-models/AudioData'
-import { ref, watch, type Ref } from 'vue'
+import OutputItem from '@/components/OutputItem.vue';
+import { useRecordingState } from '@/constants/store';
+import { useMockData } from '@/services/AudioService';
+import type { OutputItemProps } from '@/types/props/OutputItemProps';
+import type { AudioData } from '@/types/view-models/AudioData';
+import { ref, watch, type Ref } from 'vue';
 
-const isRecording: Ref<boolean> = useRecordingState()
-const childProps: Ref<OutputItemProps[]> = ref([])
-const mockData: Ref<AudioData> = useMockData()
+const isRecording: Ref<boolean> = useRecordingState();
+const childProps: Ref<OutputItemProps[]> = ref([]);
+const mockData: Ref<AudioData> = useMockData();
 
 watch(
   () => isRecording.value,
   (value) => {
     childProps.value.forEach((prop) => {
-      prop.isActive = false
-    })
+      prop.isActive = false;
+    });
 
     if (value) {
       childProps.value.push({
         isActive: value,
         index: childProps.value.length,
         text: ''
-      })
+      });
     }
   }
-)
+);
 
 watch(
   () => mockData.value,
   (mockData) => {
-    console.log(mockData.word)
-    const activeCard: OutputItemProps | undefined = getActiveOutputItem()
+    console.log(mockData.word);
+    const activeCard: OutputItemProps | undefined = getActiveOutputItem();
 
     if (activeCard && mockData.index > 0) {
-      activeCard.text += ' ' + mockData.word
+      activeCard.text += ' ' + mockData.word;
     }
   }
-)
+);
 
 function getActiveOutputItem(): OutputItemProps | undefined {
-  return childProps.value.find((props) => props.isActive)
+  return childProps.value.find((props) => props.isActive);
 }
 </script>
 

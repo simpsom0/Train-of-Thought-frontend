@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { setRecordingState, useRecordingState } from '@/constants/store'
+import { setRecordingState, useRecordingState } from '@/constants/store';
 
-const isRecording = useRecordingState()
-const flipRecording = setRecordingState()
+const isRecording = useRecordingState();
+const flipRecording = setRecordingState();
 </script>
 
 <template>

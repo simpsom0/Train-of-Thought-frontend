@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import SpeechOutputView from './views/SpeechOutputView.vue'
-import RecordButton from './components/RecordButton.vue'
-import { ref, type Ref } from 'vue'
+import SpeechOutputView from './views/SpeechOutputView.vue';
+import RecordButton from './components/RecordButton.vue';
+import { ref, type Ref } from 'vue';
 
-let isRecording: Ref<boolean> = ref(false)
+let isRecording: Ref<boolean> = ref(false);
 </script>
 
 <template>
