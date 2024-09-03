@@ -1,4 +1,4 @@
-import { ref, type Ref } from 'vue';
+import { readonly, ref, type Ref } from 'vue';
 
 const isRecording: Ref<boolean> = ref(false);
 
@@ -7,7 +7,7 @@ function flipRecording(): void {
 }
 
 export function useRecordingState(): Ref<boolean> {
-  return isRecording;
+  return readonly(isRecording);
 }
 
 export function setRecordingState(): () => void {

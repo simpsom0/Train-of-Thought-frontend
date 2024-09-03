@@ -28,7 +28,7 @@ watch(
           index: index,
           confidence: 1000
         };
-      }, 100);
+      }, 25);
     } else if (!value && intervalId != null) {
       clearInterval(intervalId);
     }
