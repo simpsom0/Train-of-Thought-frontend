@@ -4,12 +4,12 @@ import { useRecordingState } from '@/constants/store';
 import { useMockData } from '@/services/AudioService';
 import type { OutputCardProps } from '@/types/props/OutputCardProps';
 import type { AudioData } from '@/types/view-models/AudioData';
-import { onUpdated, ref, watch, type Ref, type VNodeRef } from 'vue';
+import { nextTick, onUpdated, ref, watch, type Ref } from 'vue';
 
 const isRecording: Ref<boolean> = useRecordingState();
 const childProps: Ref<OutputCardProps[]> = ref([]);
 const mockData: Ref<AudioData> = useMockData();
-const cardContainer: Ref<HTMLElement | null> = ref(null);
+const bufferContainer: Ref<HTMLElement | null> = ref(null);
 
 watch(
   () => isRecording.value,
@@ -24,7 +24,6 @@ watch(
         index: childProps.value.length,
         text: ''
       });
-      scrollToBottom();
     }
   }
 );
@@ -32,9 +31,7 @@ watch(
 watch(
   () => mockData.value,
   (mockData) => {
-    // console.log(mockData.word);
     const activeCard: OutputCardProps | undefined = getActiveOutputCard();
-
     if (activeCard && mockData.index > 0) {
       activeCard.text += ' ' + mockData.word;
     }
@@ -45,29 +42,24 @@ function getActiveOutputCard(): OutputCardProps | undefined {
   return childProps.value.find((props) => props.isActive);
 }
 
-function scrollToBottom(): void {
-  if (cardContainer.value) {
-    console.log(cardContainer.value.scrollHeight);
-    cardContainer.value.scrollTop = cardContainer.value.scrollHeight;
-  }
-}
-
 onUpdated(() => {
-  scrollToBottom();
+  nextTick(() => {
+    if (bufferContainer.value) {
+      bufferContainer.value.scrollIntoView();
+    }
+  });
 });
 </script>
 
 <template>
-  <main
-    ref="cardContainer"
-    class="flex justify-start flex-col flex-nowrap scroll-smooth overflow-y-auto"
-  >
+  <main class="w-full flex justify-start items-center flex-col flex-nowrap">
     <OutputCard v-for="props in childProps" v-bind="props" :key="props.index" />
   </main>
+  <div class="buffer w-full h-24" ref="bufferContainer"></div>
 </template>
 
 <style scoped>
-/* main {
+/* .buffer {
   border: 1px solid red;
 } */
 </style>

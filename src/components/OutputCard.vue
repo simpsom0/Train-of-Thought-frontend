@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { OutputCardProps } from '@/types/props/OutputCardProps';
 
-const props = defineProps<OutputCardProps>();
+const props: OutputCardProps = defineProps<OutputCardProps>();
 
 async function copyToClipboard(): Promise<boolean> {
   try {
@@ -21,7 +21,7 @@ async function copyToClipboard(): Promise<boolean> {
 <template>
   <div
     @click="copyToClipboard()"
-    class="flex justify-center m-2 p-2 rounded bg-c-white-100"
+    class="w-2/3 flex justify-center m-2 p-2 rounded bg-c-white-100"
   >
     {{ props.text }}
   </div>
