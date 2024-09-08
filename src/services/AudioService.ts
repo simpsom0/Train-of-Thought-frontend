@@ -1,5 +1,5 @@
 import { lorem_chunked } from '@/constants/loremIpsum';
-import { useRecordingState } from '@/constants/store';
+import { useRecordingState } from '@/services/store';
 import type { AudioData } from '@/types/view-models/AudioData';
 import { ref, watch, type Ref } from 'vue';
 
