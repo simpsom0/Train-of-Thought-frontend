@@ -22,7 +22,7 @@ watch(
   (value) => {
     if (value) {
       intervalId = setInterval(() => {
-        index += 1;
+        index = index < lorem_chunked.length - 1 ? index + 1 : 0;
         mockData.value = {
           word: lorem_chunked[index],
           index: index,
