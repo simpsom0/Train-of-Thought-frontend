@@ -55,7 +55,7 @@
   <main class="w-full flex justify-start items-center flex-col flex-nowrap">
     <OutputCard v-for="props in childProps" v-bind="props" :key="props.index" />
   </main>
-  <div class="buffer w-full h-24" ref="bufferContainer"></div>
+  <div class="buffer w-full h-28" ref="bufferContainer"></div>
 </template>
 
 <style scoped>

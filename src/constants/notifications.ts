@@ -1,4 +1,4 @@
-export const notifications = {
+export const notificationOptions = {
   recording: 'recording',
   stopRecording: 'stopped recording',
   errorRecording: 'error when recording, refresh page',

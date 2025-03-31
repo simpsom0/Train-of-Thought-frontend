@@ -1,25 +1,22 @@
 <script setup lang="ts">
-  import { notifications } from '@/constants/notifications';
+  import { notificationOptions } from '@/constants/notifications';
   import { severityLevel } from '@/constants/severity';
-  import { setNotificationState } from '@/services/store';
+  import { Log } from '@/services/LogService';
+  import { setNotificationsState } from '@/services/store';
   import type { OutputCardProps } from '@/types/OutputCardProps';
-  import { ref, type Ref } from 'vue';
 
+  const logger = new Log();
   const props: OutputCardProps = defineProps<OutputCardProps>();
-  const setNotification = setNotificationState();
-  const midClick: Ref<boolean> = ref(false);
+  const pushNotification = setNotificationsState();
 
   async function copyToClipboard(): Promise<boolean> {
     try {
       await navigator.clipboard.writeText(props.text);
-      setNotification({ level: severityLevel.info, text: notifications.copy });
+      pushNotification(notificationOptions.copy, severityLevel.info);
       return true;
     } catch (e) {
-      setNotification({
-        level: severityLevel.error,
-        text: notifications.errorCopy
-      });
-      console.log(e);
+      pushNotification(notificationOptions.errorCopy, severityLevel.error);
+      logger.print(e as string);
       return false;
     }
   }
@@ -27,17 +24,15 @@
 
 <template>
   <div
-    @mousedown="midClick = true"
-    @mouseup="
-      midClick = false;
-      copyToClipboard();
-    "
+    @mouseup="copyToClipboard()"
     :class="[
       'w-2/3 flex justify-center m-2 p-2 rounded',
       'transition duration-200 ease-in-out',
       'filter drop-shadow-lg',
-      'hover:drop-shadow-none',
-      isActive || midClick ? 'bg-c-white-200' : 'bg-c-white-100'
+      'bg-c-white-100',
+      'hover:bg-c-white-200',
+      'active:bg-c-white-400',
+      { ['bg-c-white-200']: isActive }
     ]"
   >
     {{ props.text }}
