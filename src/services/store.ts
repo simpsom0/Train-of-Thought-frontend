@@ -2,11 +2,9 @@ import { readonly, ref, type Ref } from 'vue';
 import { severityLevel } from '@/constants/severity';
 import { notificationOptions } from '@/constants/notifications';
 import type { NotificationItem } from '@/types/NotificationItem';
+import { IdService } from '@/services/IdService';
 
-/**
- * best to only set/use through consumeNextNotificationId()
- */
-let availableNotificationId: number = 0;
+const idService: IdService = new IdService({});
 const notifications: Ref<NotificationItem[]> = ref([]);
 
 const isRecording: Ref<boolean> = ref(false);
@@ -42,17 +40,12 @@ export function setNotificationsState(): (
   return pushNotification;
 }
 
-function consumeNextNotificationId(): number {
-  availableNotificationId += 1;
-  return availableNotificationId - 1;
-}
-
 function pushNotification(message: string, level: severityLevel): void {
   // FIFO queue
   notifications.value.push({
     level: level,
     text: message,
-    id: consumeNextNotificationId()
+    id: idService.getNextId()
   });
   setTimeout(() => notifications.value.splice(0, 1), 2000);
 }

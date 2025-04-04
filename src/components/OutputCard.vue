@@ -24,9 +24,11 @@
 
 <template>
   <div
+    title="Click to Copy"
     @mouseup="copyToClipboard()"
     :class="[
       'w-2/3 flex justify-center m-2 p-2 rounded',
+      'cursor-pointer',
       'transition duration-200 ease-in-out',
       'filter drop-shadow-lg',
       'bg-c-white-100',
